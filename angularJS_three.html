@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Manager</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input {
+      padding: 8px;
+      margin-bottom: 10px;
+      width: 48%;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 8px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    td button {
+      background-color: #f44336;
+    }
+
+    td button, button {
+      padding: 5px;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body ng-app="contactApp">
+<div ng-controller="contactController">
+  <h1>Contact Manager</h1>
+  <input type="text" ng-model="newContact.name" placeholder="Name" />
+  <input type="text" ng-model="newContact.phone" placeholder="Phone Number" />
+  <button ng-click="addContact()">Add Contact</button>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Phone Number</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="contact in contacts">
+      <td>{{contact.name}}</td>
+      <td>{{contact.phone}}</td>
+      <td><button ng-click="deleteContact(contact)">Delete</button></td>
+    </tr>
+  </table>
+</div>
+
+<script>
+  var app = angular.module('contactApp', []);
+
+  app.controller('contactController', function($scope) {
+    $scope.newContact = {};
+    $scope.contacts = [];
+
+    $scope.addContact = function() {
+      $scope.contacts.push($scope.newContact);
+      $scope.newContact = {};
+    };
+
+    $scope.deleteContact = function(contact) {
+      var index = $scope.contacts.indexOf(contact);
+      $scope.contacts.splice(index, 1);
+    };
+  });
+</script>
+</body>
+</html>
